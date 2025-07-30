@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head><meta charset="UTF‑8"><title>Proxy Format Checker</title>
+<style>body { font‑family: sans‑serif; background: #f9f9f9; padding: 20px; } textarea { width: 100%; } button { margin-top: 10px; }</style>
+</head>
+<body>
+  <h2>تست فرمت پروکسی</h2>
+  <textarea id="proxyInput" rows="8" placeholder="مثلاً:\nhttp://123.123.123.123:8080\nsocks5://123.123.123.124:1080"></textarea><br>
+  <button onclick="testProxies()">تست کن</button>
+  <pre id="output"></pre>
+
+  <script>
+    function testProxies() {
+      const lines = document.getElementById('proxyInput').value.split('\n');
+      const valid = [], invalid = [];
+      const regex = /^(http|https|socks5):\/\/\d{1,3}(\.\d{1,3}){3}:\d+$/;
+      lines.forEach(l => {
+        const t = l.trim();
+        if (!t) return;
+        regex.test(t) ? valid.push(t) : invalid.push(t);
+      });
+      document.getElementById('output').textContent =
+        "✅ معتبر:\n" + valid.join('\n') +
+        "\n\n❌ نامعتبر:\n" + invalid.join('\n');
+    }
+  </script>
+</body>
+</html>
